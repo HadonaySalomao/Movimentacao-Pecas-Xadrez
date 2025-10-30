@@ -1,5 +1,5 @@
 void moverBispo(int atual, int qtd_casas, char direcao[20]) {
-    if (atual > qtd_casas) // caso base: quando já andou todas as casas
+    if (atual > qtd_casas) 
         return;
 
     printf("Bispo moveu para a casa %d na direção %s (diagonal)\n", atual, direcao);
@@ -7,11 +7,32 @@ void moverBispo(int atual, int qtd_casas, char direcao[20]) {
     moverBispo(atual + 1, qtd_casas, direcao); 
 }
 
+void moverCavalo(int passo, int qtd_casas, int x, int y, char direcao[20]) {
+    if (passo > qtd_casas)
+
+    printf("Movimento %d: Cavalo está em (%d, %d)\n", passo, x, y);
+
+    
+    if (direcao[0] == 'f') {
+        x += 2;
+        if (direcao[1] == 'd') y += 1; 
+        else if (direcao[1] == 'e') y -= 1; 
+    } else if (direcao[0] == 't') { 
+        x -= 2;
+        if (direcao[1] == 'd') y += 1;
+        else if (direcao[1] == 'e') y -= 1;
+    }
+
+    moverCavalo(passo + 1, qtd_casas, x, y, direcao);
+}
+
+
 
 int main(){
     int opc;
     char direcao[50];
     int qtd_casas;
+    int x_inicial = 4, y_inicial = 4;
     printf("=============MENU===============\n");
     printf("Escolha qual peça ira movimentar\n");
     printf("1- Rainha. Direção(Livre)\n");
@@ -53,7 +74,18 @@ int main(){
             scanf("%s", direcao);
 
             moverBispo(1, qtd_casas, direcao);
-            break;        
+            break;    
+        case 4:
+            printf("Você escolheu o Cavalo!\n");
+            printf("Quantos movimentos em L deseja fazer?\n");
+            scanf("%d", &qtd_casas);
+            printf("Qual direção? (ex: fd = frente-direita, fe = frente-esquerda, td = tras-direita, te = tras-esquerda)\n");
+            scanf("%s", direcao);
+
+            moverCavalo(1, qtd_casas, x_inicial, y_inicial, direcao);
+            break;
+            
+            
     default:
             printf("Opção inválida!\n");
         break;
